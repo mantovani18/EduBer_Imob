@@ -789,6 +789,7 @@ function applyFilters() {
     const filterTipo = document.getElementById('filterTipo');
     const filterLocalizacao = document.getElementById('filterLocalizacao');
     const filterValor = document.getElementById('filterValor');
+    const searchInput = document.getElementById('searchInput');
     const activeQuartosBtn = document.querySelector('.filter-btn.active');
     
     console.log('filterTipo:', filterTipo?.value || 'NOT FOUND');
@@ -801,10 +802,16 @@ function applyFilters() {
         return;
     }
     
-    activeFilters.tipo = filterTipo.value;
+    // Atualizar filtros preservando valores existentes de searchTerm se não houver input
+    activeFilters.tipo = filterTipo.value || activeFilters.tipo;
     activeFilters.localizacao = filterLocalizacao.value;
     activeFilters.valorMax = parseInt(filterValor.value);
     activeFilters.quartosMin = activeQuartosBtn ? parseInt(activeQuartosBtn.dataset.quartos) || 0 : 0;
+    
+    // Atualizar searchTerm apenas se o campo existir e tiver valor, senão manter o existente
+    if (searchInput && searchInput.value) {
+        activeFilters.searchTerm = searchInput.value.toLowerCase();
+    }
     
     console.log('📋 Filtros aplicados:', activeFilters);
     
@@ -817,7 +824,8 @@ function applyFilters() {
         const searchMatch = !activeFilters.searchTerm || 
                           property.nome.toLowerCase().includes(activeFilters.searchTerm) ||
                           property.tipo.toLowerCase().includes(activeFilters.searchTerm) ||
-                          property.localizacao.toLowerCase().includes(activeFilters.searchTerm);
+                          property.localizacao.toLowerCase().includes(activeFilters.searchTerm) ||
+                          property.descricao.toLowerCase().includes(activeFilters.searchTerm);
         
         return tipoMatch && localizacaoMatch && valorMatch && quartosMatch && searchMatch;
     });
