@@ -336,6 +336,27 @@ function initEventListeners() {
     if (mobileToggle && nav) {
         mobileToggle.addEventListener('click', () => {
             nav.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Fechar menu ao clicar em um link
+        const navLinks = nav.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !mobileToggle.contains(e.target) && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
     
@@ -718,6 +739,199 @@ function updatePropertiesCount() {
 }
 
 // =============================================================================
+// MODAL DE DETALHES DO IMÓVEL
+// =============================================================================
+
+let currentPropertyImages = [];
+let currentImageIndex = 0;
+let currentPropertyData = null;
+
+// Abrir modal ao clicar no card
+document.addEventListener('click', (e) => {
+    const card = e.target.closest('.property-card');
+    if (card && !e.target.closest('.property-favorite')) {
+        const propertyId = parseInt(card.dataset.id);
+        openPropertyModal(propertyId);
+    }
+});
+
+function openPropertyModal(propertyId) {
+    const property = properties.find(p => p.id === propertyId);
+    if (!property) return;
+    
+    currentPropertyData = property;
+    currentPropertyImages = property.imagens;
+    currentImageIndex = 0;
+    
+    const modal = document.getElementById('propertyModal');
+    const isFavorite = favorites.includes(propertyId);
+    
+    // Preencher informações
+    document.getElementById('modalType').textContent = property.tipo;
+    document.getElementById('modalTitle').textContent = property.nome;
+    document.getElementById('modalLocation').textContent = property.localizacao;
+    document.getElementById('modalPrice').textContent = `R$ ${formatPrice(property.valor)}`;
+    document.getElementById('modalDescription').textContent = property.descricao;
+    
+    // Atualizar link do WhatsApp
+    const modalWhatsapp = document.getElementById('modalWhatsapp');
+    const message = `Olá! Tenho interesse no imóvel: ${property.nome} - ${property.localizacao} (Cód: ${property.id})`;
+    modalWhatsapp.href = `https://wa.me/5543999016628?text=${encodeURIComponent(message)}`;
+    
+    // Atualizar botão de favoritos
+    const modalFavorite = document.getElementById('modalFavorite');
+    if (isFavorite) {
+        modalFavorite.classList.add('active');
+        modalFavorite.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            Favoritado
+        `;
+    } else {
+        modalFavorite.classList.remove('active');
+        modalFavorite.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            Favoritar
+        `;
+    }
+    
+    // Preencher características
+    const featuresHTML = [];
+    if (property.quartos > 0) {
+        featuresHTML.push(`
+            <div class="modal-feature">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span>${property.quartos} ${property.quartos === 1 ? 'quarto' : 'quartos'}</span>
+            </div>
+        `);
+    }
+    if (property.banheiros > 0) {
+        featuresHTML.push(`
+            <div class="modal-feature">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1 0l-1 1a1.5 1.5 0 0 0 0 1L7 9"></path>
+                    <path d="m21 15-3-3-1.5 1.5a1.5 1.5 0 0 1-1 .5 1.5 1.5 0 0 1-1-.5L9 9"></path>
+                    <path d="M7 13v5a2 2 0 0 0 2 2h5"></path>
+                    <circle cx="17" cy="17" r="5"></circle>
+                </svg>
+                <span>${property.banheiros} ${property.banheiros === 1 ? 'banheiro' : 'banheiros'}</span>
+            </div>
+        `);
+    }
+    if (property.vagas > 0) {
+        featuresHTML.push(`
+            <div class="modal-feature">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"></path>
+                    <circle cx="6.5" cy="16.5" r="2.5"></circle>
+                    <circle cx="16.5" cy="16.5" r="2.5"></circle>
+                </svg>
+                <span>${property.vagas} ${property.vagas === 1 ? 'vaga' : 'vagas'}</span>
+            </div>
+        `);
+    }
+    if (property.arCondicionado) {
+        featuresHTML.push(`
+            <div class="modal-feature">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                <span>Ar Condicionado</span>
+            </div>
+        `);
+    }
+    document.getElementById('modalFeatures').innerHTML = featuresHTML.join('');
+    
+    // Configurar galeria
+    updateModalGallery();
+    
+    // Mostrar modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function updateModalGallery() {
+    const mainImage = document.getElementById('modalMainImage');
+    const thumbnailsContainer = document.getElementById('galleryThumbnails');
+    const currentIndex = document.getElementById('currentImageIndex');
+    const totalImages = document.getElementById('totalImages');
+    
+    // Atualizar imagem principal
+    mainImage.src = currentPropertyImages[currentImageIndex];
+    mainImage.alt = currentPropertyData.nome;
+    
+    // Atualizar contador
+    currentIndex.textContent = currentImageIndex + 1;
+    totalImages.textContent = currentPropertyImages.length;
+    
+    // Criar thumbnails
+    thumbnailsContainer.innerHTML = currentPropertyImages.map((img, index) => `
+        <div class="gallery-thumbnail ${index === currentImageIndex ? 'active' : ''}" data-index="${index}">
+            <img src="${img}" alt="Imagem ${index + 1}">
+        </div>
+    `).join('');
+}
+
+// Fechar modal
+document.getElementById('modalClose')?.addEventListener('click', closePropertyModal);
+document.querySelector('.modal-overlay')?.addEventListener('click', closePropertyModal);
+
+function closePropertyModal() {
+    const modal = document.getElementById('propertyModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Navegação da galeria
+document.getElementById('galleryPrev')?.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex - 1 + currentPropertyImages.length) % currentPropertyImages.length;
+    updateModalGallery();
+});
+
+document.getElementById('galleryNext')?.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex + 1) % currentPropertyImages.length;
+    updateModalGallery();
+});
+
+// Click nas thumbnails
+document.addEventListener('click', (e) => {
+    const thumbnail = e.target.closest('.gallery-thumbnail');
+    if (thumbnail) {
+        currentImageIndex = parseInt(thumbnail.dataset.index);
+        updateModalGallery();
+    }
+});
+
+// Favoritar do modal
+document.getElementById('modalFavorite')?.addEventListener('click', () => {
+    if (currentPropertyData) {
+        toggleFavorite(currentPropertyData.id);
+        openPropertyModal(currentPropertyData.id); // Atualizar modal
+    }
+});
+
+// Teclas do teclado para navegação
+document.addEventListener('keydown', (e) => {
+    const modal = document.getElementById('propertyModal');
+    if (modal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+            closePropertyModal();
+        } else if (e.key === 'ArrowLeft') {
+            currentImageIndex = (currentImageIndex - 1 + currentPropertyImages.length) % currentPropertyImages.length;
+            updateModalGallery();
+        } else if (e.key === 'ArrowRight') {
+            currentImageIndex = (currentImageIndex + 1) % currentPropertyImages.length;
+            updateModalGallery();
+        }
+    }
+});
+
+// =============================================================================
 // CONSOLE INFO
 // =============================================================================
 
@@ -732,6 +946,7 @@ console.log(`
 ║   ✅ Favoritos com localStorage                              ║
 ║   ✅ Integração WhatsApp                                     ║
 ║   ✅ Design responsivo e moderno                             ║
+║   ✅ Modal de detalhes com galeria                           ║
 ║                                                               ║
 ║   Site desenvolvido com HTML, CSS e JavaScript puro          ║
 ║                                                               ║
