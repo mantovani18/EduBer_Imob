@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eduber Administradora de Imoveis Ltda - Encontre o imóvel ideal para você">
+    <title>Eduber Administradora de Imoveis Ltda</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <div class="container header-content">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="img/WhatsApp_Image_2026-02-04_at_16.02.53-removebg-preview.png" alt="Logo Eduber" class="logo-img">
+                
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#inicio" class="nav-link">Início</a></li>
+                    <li><a href="imoveis.html" class="nav-link">Imóveis</a></li>
+                    <li><a href="#contato" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="inicio">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h2 class="hero-title">Encontre o imóvel que você procura</h2>
+            
+            <!-- Filter Tabs -->
+            <div class="hero-tabs">
+                <button class="hero-tab active" data-tipo="venda">
+                    Venda
+                </button>
+                <button class="hero-tab" data-tipo="locacao">
+                    Locação
+                </button>
+                <button class="hero-tab" data-tipo="cidade">
+                    Cidade
+                </button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <select class="search-select" id="searchSelect">
+                    <option value="">Selecione</option>
+                    <option value="casa">Casa</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="terreno">Terreno</option>
+                    <option value="cobertura">Cobertura</option>
+                </select>
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput" 
+                    placeholder="Rua, bairro, cidade, empreendimento, código"
+                >
+                <button class="search-btn" id="searchBtn">
+                    Pesquisar
+                </button>
+            </div>
+            
+            <!-- Quick Link -->
+            <div class="hero-quick-link">
+                <a href="imoveis.html" class="quick-link-btn">Buscar por imóveis em Rolândia e Região</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== EXPERIENCE SECTION ========== -->
+    <section class="experience-section">
+        <div class="container">
+            <div class="experience-grid">
+                <div class="experience-content">
+                    <h2 class="section-title">EduBer Administradora de Imóveis Ltda</h2>
+                    <div class="experience-year">Desde 2009</div>
+                    <p class="experience-tagline">
+                        Credibilidade para investir, segurança para decidir e conforto para chamar de lar
+                    </p>
+                    <a href="img/logo.png" target="_blank" class="btn btn-primary btn-experience">Fale Conosco</a>
+                </div>
+                <div class="experience-image">
+                    <img src="" alt="Equipe Eduber" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== FEATURED PROPERTIES SECTION ========== -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title-center">Imóveis em destaque à venda</h2>
+            
+            <div class="featured-grid" id="featuredGrid">
+                <!-- Cards serão inseridos via JavaScript -->
+            </div>
+            
+            <div class="featured-actions">
+                <a href="imoveis.html" class="btn btn-outline">Ver todos os imóveis</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <!-- Footer Brand -->
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Edu<span>Ber</span></h2>
+                    </div>
+                    <p class="footer-text">
+                        Eduber Administradora de Imoveis Ltda - Sua imobiliária de confiança. Encontre o imóvel perfeito para você e sua família.
+                    </p>
+                </div>
+                
+                <!-- Footer Links -->
+                <div class="footer-column">
+                    <h4 class="footer-title">Links Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="imoveis.html">Imóveis</a></li>
+                        <li><a href="#contato">Informações</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Contact -->
+                <div class="footer-column">
+                    <h4 class="footer-title">Informações</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            (43) 99901-6628
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            bernardobeffa@gmail.com
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Rolândia e Região - PR
+                            
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M3 9h18"/>
+                            </svg>
+                            CNPJ: 11.085.203/0001-44
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p>&copy; 2026 Eduber Administradora de Imoveis Ltda. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ========== FLOATING WHATSAPP ========== -->
+    <a href="https://wa.me/5543999016628?text=Ol%C3%A1%2C%20tenho%20interesse%20em%20conhecer%20mais%20sobre%20os%20im%C3%B3veis%20da%20Eduber" 
+       class="whatsapp-floating" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       title="Fale conosco no WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.186.686 4.215 1.852 5.898L0 24l6.344-2.051C8.661 23.306 10.274 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.941c-1.489 0-2.949-.366-4.246-1.055l-.305-.17-3.161 1.022.998-3.649-.195-.31C2.867 16.183 2.059 14.165 2.059 12c0-5.505 4.477-9.976 9.98-9.976 2.605 0 5.054 1.017 6.895 2.858 1.84 1.84 2.857 4.29 2.857 6.893 0 5.506-4.478 9.977-9.981 9.977zm5.204-7.38c-.283-.141-1.676-.827-1.936-.921-.26-.094-.449-.141-.639.141-.19.282-.733.921-.898 1.111-.165.19-.33.214-.613.071-.283-.141-1.195-.441-2.274-1.403-.841-.749-1.409-1.674-1.574-1.957-.165-.282-.018-.436.124-.577.127-.127.283-.331.425-.496.141-.165.188-.283.283-.471.094-.188.047-.354-.023-.496-.07-.141-.638-1.536-.874-2.104-.23-.552-.465-.477-.639-.486-.165-.009-.354-.009-.543-.009-.189 0-.496.071-.756.354-.26.283-.991.968-.991 2.356 0 1.388 1.014 2.735 1.155 2.925.14.19 1.996 3.051 4.839 4.273.677.291 1.204.466 1.614.596.679.214 1.297.186 1.785.113.544-.081 1.676-.685 1.911-1.348.235-.663.235-1.231.165-1.348-.07-.117-.259-.189-.542-.33z"/>
+        </svg>
+    </a>
+    
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    
+</body>
+</html>
