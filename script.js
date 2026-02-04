@@ -619,11 +619,20 @@ function attachPropertyEventListeners() {
 function handleSearch() {
     const searchInput = document.getElementById('searchInput');
     const searchSelect = document.getElementById('searchSelect');
+    
+    if (!searchInput) {
+        console.error('Search input not found');
+        return;
+    }
+    
     const searchTerm = searchInput.value.toLowerCase().trim();
     const selectedType = searchSelect ? searchSelect.value.toLowerCase() : '';
     
+    // Detectar se estamos na página inicial
+    const isIndexPage = !window.location.pathname.includes('imoveis.html');
+    
     // Se estamos na página inicial, redirecionar para página de imóveis com parâmetros
-    if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+    if (isIndexPage) {
         let queryParams = [];
         
         if (searchTerm) {
@@ -635,7 +644,11 @@ function handleSearch() {
         }
         
         const queryString = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
-        window.location.href = 'imoveis.html' + queryString;
+        
+        // Obter o caminho base correto
+        const currentPath = window.location.pathname;
+        const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+        window.location.href = basePath + 'imoveis.html' + queryString;
         return;
     }
     
