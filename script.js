@@ -199,6 +199,39 @@ const properties = [
             "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?w=800&h=600&fit=crop"
         ],
         badge: "destaque"
+    },
+    {
+        id: 13,
+        nome: "Barracão",
+        tipo: "Barracão",
+        valor: 0,
+        localizacao: "Av. Presidente Vargas, 2433, Centro - Rolândia/PR",
+        quartos: 0,
+        banheiros: 1,
+        vagas: 0,
+        arCondicionado: false,
+        descricao: "Salão do lado esquerdo de quem olha de frente para o imóvel. O imóvel é composto por um salão com área total aproximada de 306,46 m², sendo 254,26 m² do salão principal (térreo), 5,05 m² de copa, 2,59 m² de área de serviços, 3,58 m² de sanitário (todos no térreo) e 40,95 m² de mezanino localizado na parte superior do salão principal, além de um pequeno corredor aos fundos. ITENS INCLUSOS: 16 luminárias de teto; 21 caixas de interruptores e energia; 2 portas de madeira (novas); 1 vaso sanitário com tampa e descarga (ambos novos); 1 pia de lavabo (nova); 1 caixa de energia na copa; 1 tanque (novo) na área de serviços; 3 janelas novas (área de serviços, copa e sanitário); 1 portão eletrônico com motor (novo); 1 escada para acesso ao mezanino; Vidros do mezanino (novos); Caixas de padrão de energia; Pisos de porcelanato novos e em perfeitas condições nas áreas de serviços, sanitário e copa, e azulejos no banheiro e na área de serviço.",
+        imagens: [
+            "Imovel-BarracaoTeste/Imovel1.jpg",
+            "Imovel-BarracaoTeste/Imagem2.jpg",
+            "Imovel-BarracaoTeste/Imagem4.png",
+            "Imovel-BarracaoTeste/Imagem5.jpg",
+            "Imovel-BarracaoTeste/Imagem6.jpg",
+            "Imovel-BarracaoTeste/Imagem7.png",
+            "Imovel-BarracaoTeste/Imagem8.png",
+            "Imovel-BarracaoTeste/Imagem9.png",
+            "Imovel-BarracaoTeste/Imagem10.png",
+            "Imovel-BarracaoTeste/Imagem11.png",
+            "Imovel-BarracaoTeste/Imagem12.png",
+            "Imovel-BarracaoTeste/Imagem13.png",
+            "Imovel-BarracaoTeste/Imagem14.png",
+            "Imovel-BarracaoTeste/Imagem15.png",
+            "Imovel-BarracaoTeste/Imagem16.png",
+            "Imovel-BarracaoTeste/Imagem17.png",
+            "Imovel-BarracaoTeste/Imagem18.jpg",
+            "Imovel-BarracaoTeste/Imagem19.png"
+        ],
+        badge: "novo"
     }
 ];
 
