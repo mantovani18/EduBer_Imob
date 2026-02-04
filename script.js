@@ -260,19 +260,77 @@ let activeFilters = {
 // =============================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Iniciando aplicação...');
+    
+    // Verificar se há parâmetros de busca na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const tipoParam = urlParams.get('tipo');
+    
+    console.log('🔍 Parâmetros da URL:', { search: searchParam, tipo: tipoParam });
+    
     // Renderizar imóveis em destaque imediatamente (só na página inicial)
     const featuredGrid = document.getElementById('featuredGrid');
     if (featuredGrid) {
         renderFeaturedProperties();
     }
     
-    // Simular carregamento (skeleton) para grid principal (só na página de imóveis)
+    // Grid principal (só na página de imóveis)
     const propertiesGrid = document.getElementById('propertiesGrid');
+    
     if (propertiesGrid && !featuredGrid) {
-        setTimeout(() => {
-            renderProperties(properties);
+        // Se temos parâmetros de busca, aplicar imediatamente
+        if (searchParam || tipoParam) {
+            console.log('✅ Aplicando filtros da URL...');
+            
+            const searchInput = document.getElementById('searchInput');
+            const filterTipo = document.getElementById('filterTipo');
+            
+            if (searchParam) {
+                if (searchInput) searchInput.value = searchParam;
+                activeFilters.searchTerm = searchParam.toLowerCase();
+                console.log('🔎 Termo de busca aplicado:', searchParam);
+            }
+            
+            if (tipoParam) {
+                const tipoCapitalized = tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
+                if (filterTipo) filterTipo.value = tipoCapitalized;
+                activeFilters.tipo = tipoCapitalized;
+                console.log('🏷️ Tipo aplicado:', tipoCapitalized);
+            }
+            
+            // Filtrar e renderizar imediatamente
+            filteredProperties = properties.filter(property => {
+                let matches = true;
+                
+                if (activeFilters.searchTerm) {
+                    matches = matches && (
+                        property.nome.toLowerCase().includes(activeFilters.searchTerm) ||
+                        property.tipo.toLowerCase().includes(activeFilters.searchTerm) ||
+                        property.localizacao.toLowerCase().includes(activeFilters.searchTerm) ||
+                        property.descricao.toLowerCase().includes(activeFilters.searchTerm) ||
+                        property.id.toString().includes(activeFilters.searchTerm)
+                    );
+                }
+                
+                if (activeFilters.tipo) {
+                    matches = matches && property.tipo.toLowerCase() === activeFilters.tipo.toLowerCase();
+                }
+                
+                return matches;
+            });
+            
+            console.log(`📊 ${filteredProperties.length} imóveis encontrados`);
+            
+            renderProperties(filteredProperties);
             updatePropertiesCount();
-        }, 1500);
+        } else {
+            // Sem filtros, simular carregamento normal
+            setTimeout(() => {
+                renderProperties(properties);
+                updatePropertiesCount();
+            }, 1500);
+        }
     }
     
     // Inicializar event listeners
@@ -288,6 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeaderScroll();
     
     console.log('✅ Site carregado com sucesso!');
+});
     console.log(`📊 Total de imóveis: ${properties.length}`);
     console.log(`⭐ Imóveis em destaque: ${document.getElementById('featuredGrid') ? 'Renderizados' : 'Não encontrado'}`);
 });
@@ -722,32 +781,6 @@ function handleSearch() {
     renderProperties(filteredProperties);
     updatePropertiesCount();
 }
-
-// Aplicar filtros da URL quando carregar a página de imóveis
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchParam = urlParams.get('search');
-    const tipoParam = urlParams.get('tipo');
-    
-    if (searchParam || tipoParam) {
-        const searchInput = document.getElementById('searchInput');
-        const filterTipo = document.getElementById('filterTipo');
-        
-        if (searchParam && searchInput) {
-            searchInput.value = searchParam;
-            activeFilters.searchTerm = searchParam.toLowerCase();
-        }
-        
-        if (tipoParam && filterTipo) {
-            const tipoCapitalized = tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
-            filterTipo.value = tipoCapitalized;
-            activeFilters.tipo = tipoCapitalized;
-        }
-        
-        // Aplicar filtros
-        applyFilters();
-    }
-});
 
 function applyFilters() {
     console.log('🔍 APPLYFILTERS CHAMADO');
