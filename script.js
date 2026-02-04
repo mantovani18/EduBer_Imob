@@ -617,19 +617,90 @@ function attachPropertyEventListeners() {
 // =============================================================================
 
 function handleSearch() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const searchInput = document.getElementById('searchInput');
+    const searchSelect = document.getElementById('searchSelect');
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const selectedType = searchSelect ? searchSelect.value.toLowerCase() : '';
+    
+    // Se estamos na página inicial, redirecionar para página de imóveis com parâmetros
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+        let queryParams = [];
+        
+        if (searchTerm) {
+            queryParams.push(`search=${encodeURIComponent(searchTerm)}`);
+        }
+        
+        if (selectedType) {
+            queryParams.push(`tipo=${encodeURIComponent(selectedType)}`);
+        }
+        
+        const queryString = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
+        window.location.href = 'imoveis.html' + queryString;
+        return;
+    }
+    
+    // Se estamos na página de imóveis, aplicar filtros
     activeFilters.searchTerm = searchTerm;
     
+    if (selectedType) {
+        activeFilters.tipo = selectedType;
+        const filterTipo = document.getElementById('filterTipo');
+        if (filterTipo) {
+            filterTipo.value = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
+        }
+    }
+    
     filteredProperties = properties.filter(property => {
-        return property.nome.toLowerCase().includes(searchTerm) ||
-               property.tipo.toLowerCase().includes(searchTerm) ||
-               property.localizacao.toLowerCase().includes(searchTerm) ||
-               property.valor.toString().includes(searchTerm);
+        let matches = true;
+        
+        // Filtro de busca
+        if (activeFilters.searchTerm) {
+            matches = matches && (
+                property.nome.toLowerCase().includes(activeFilters.searchTerm) ||
+                property.tipo.toLowerCase().includes(activeFilters.searchTerm) ||
+                property.localizacao.toLowerCase().includes(activeFilters.searchTerm) ||
+                property.descricao.toLowerCase().includes(activeFilters.searchTerm) ||
+                property.id.toString().includes(activeFilters.searchTerm)
+            );
+        }
+        
+        // Filtro de tipo
+        if (activeFilters.tipo) {
+            matches = matches && property.tipo.toLowerCase() === activeFilters.tipo.toLowerCase();
+        }
+        
+        return matches;
     });
     
     renderProperties(filteredProperties);
     updatePropertiesCount();
 }
+
+// Aplicar filtros da URL quando carregar a página de imóveis
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const tipoParam = urlParams.get('tipo');
+    
+    if (searchParam || tipoParam) {
+        const searchInput = document.getElementById('searchInput');
+        const filterTipo = document.getElementById('filterTipo');
+        
+        if (searchParam && searchInput) {
+            searchInput.value = searchParam;
+            activeFilters.searchTerm = searchParam.toLowerCase();
+        }
+        
+        if (tipoParam && filterTipo) {
+            const tipoCapitalized = tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
+            filterTipo.value = tipoCapitalized;
+            activeFilters.tipo = tipoCapitalized;
+        }
+        
+        // Aplicar filtros
+        applyFilters();
+    }
+});
 
 function applyFilters() {
     console.log('🔍 APPLYFILTERS CHAMADO');
