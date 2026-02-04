@@ -210,6 +210,10 @@ const properties = [
         banheiros: 1,
         vagas: 0,
         arCondicionado: false,
+        customFeatures: {
+            comodos: 2,
+            mezanino: 1
+        },
         descricao: "Salão do lado esquerdo de quem olha de frente para o imóvel. O imóvel é composto por 2 cômodos, 1 mezanino e um salão com área total aproximada de 306,46 m², sendo 254,26 m² do salão principal (térreo), 5,05 m² de copa, 2,59 m² de área de serviços, 3,58 m² de sanitário (todos no térreo) e 40,95 m² de mezanino localizado na parte superior do salão principal, além de um pequeno corredor aos fundos. ITENS INCLUSOS: 16 luminárias de teto; 21 caixas de interruptores e energia; 2 portas de madeira (novas); 1 vaso sanitário com tampa e descarga (ambos novos); 1 pia de lavabo (nova); 1 caixa de energia na copa; 1 tanque (novo) na área de serviços; 3 janelas novas (área de serviços, copa e sanitário); 1 portão eletrônico com motor (novo); 1 escada para acesso ao mezanino; Vidros do mezanino (novos); Caixas de padrão de energia; Pisos de porcelanato novos e em perfeitas condições nas áreas de serviços, sanitário e copa, e azulejos no banheiro e na área de serviço.",
         imagens: [
             "Imovel-BarracaoTeste/Imovel1.jpg",
@@ -545,14 +549,30 @@ function createPropertyCard(property) {
                 
                 <p class="property-price">R$ ${formatPrice(property.valor)}</p>
                 
-                ${property.quartos > 0 ? `
+                ${property.quartos > 0 || property.customFeatures ? `
                     <div class="property-features">
+                        ${property.customFeatures ? `
+                            <div class="feature">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                </svg>
+                                <span>${property.customFeatures.comodos} cômodos</span>
+                            </div>
+                            <div class="feature">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <span>${property.customFeatures.mezanino} mezanino</span>
+                            </div>
+                        ` : property.quartos > 0 ? `
                         <div class="feature">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             </svg>
                             <span>${property.quartos} ${property.quartos === 1 ? 'quarto' : 'quartos'}</span>
                         </div>
+                        ` : ''}
                         <div class="feature">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1 0l-1 1a1.5 1.5 0 0 0 0 1L7 9"></path>
@@ -917,7 +937,25 @@ function openPropertyModal(propertyId) {
     
     // Preencher características
     const featuresHTML = [];
-    if (property.quartos > 0) {
+    if (property.customFeatures) {
+        featuresHTML.push(`
+            <div class="modal-feature">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span>${property.customFeatures.comodos} cômodos</span>
+            </div>
+        `);
+        featuresHTML.push(`
+            <div class="modal-feature">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>${property.customFeatures.mezanino} mezanino</span>
+            </div>
+        `);
+    } else if (property.quartos > 0) {
         featuresHTML.push(`
             <div class="modal-feature">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
