@@ -282,6 +282,72 @@
         </svg>
     </a>
     
+    <!-- ========== PROPERTY MODAL ========== -->
+    <div class="property-modal" id="propertyModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <!-- Gallery Section -->
+            <div class="modal-gallery">
+                <div class="gallery-main">
+                    <img src="" alt="" id="modalMainImage" class="gallery-main-image">
+                    <button class="gallery-nav gallery-prev" id="galleryPrev">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="gallery-nav gallery-next" id="galleryNext">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                    <div class="gallery-counter">
+                        <span id="currentImageIndex">1</span> / <span id="totalImages">1</span>
+                    </div>
+                </div>
+                <div class="gallery-thumbnails" id="galleryThumbnails"></div>
+            </div>
+            
+            <!-- Property Details Section -->
+            <div class="modal-details">
+                <div class="modal-header">
+                    <span class="modal-type" id="modalType"></span>
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-location" id="modalLocation"></div>
+                    <div class="modal-price" id="modalPrice"></div>
+                </div>
+                
+                <div class="modal-features" id="modalFeatures"></div>
+                
+                <div class="modal-description">
+                    <h3>Descrição</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                
+                <div class="modal-actions">
+                    <a href="#" class="btn-modal btn-primary" id="modalWhatsapp" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="20" height="20">
+                            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.186.686 4.215 1.852 5.898L0 24l6.344-2.051C8.661 23.306 10.274 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.941c-1.489 0-2.949-.366-4.246-1.055l-.305-.17-3.161 1.022.998-3.649-.195-.31C2.867 16.183 2.059 14.165 2.059 12c0-5.505 4.477-9.976 9.98-9.976 2.605 0 5.054 1.017 6.895 2.858 1.84 1.84 2.857 4.29 2.857 6.893 0 5.506-4.478 9.977-9.981 9.977zm5.204-7.38c-.283-.141-1.676-.827-1.936-.921-.26-.094-.449-.141-.639.141-.19.282-.733.921-.898 1.111-.165.19-.33.214-.613.071-.283-.141-1.195-.441-2.274-1.403-.841-.749-1.409-1.674-1.574-1.957-.165-.282-.018-.436.124-.577.127-.127.283-.331.425-.496.141-.165.188-.283.283-.471.094-.188.047-.354-.023-.496-.07-.141-.638-1.536-.874-2.104-.23-.552-.465-.477-.639-.486-.165-.009-.354-.009-.543-.009-.189 0-.496.071-.756.354-.26.283-.991.968-.991 2.356 0 1.388 1.014 2.735 1.155 2.925.14.19 1.996 3.051 4.839 4.273.677.291 1.204.466 1.614.596.679.214 1.297.186 1.785.113.544-.081 1.676-.685 1.911-1.348.235-.663.235-1.231.165-1.348-.07-.117-.259-.189-.542-.33z"/>
+                        </svg>
+                        Falar com Corretor
+                    </a>
+                    <button class="btn-modal btn-secondary" id="modalFavorite">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        Favoritar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- JavaScript -->
     <script src="script.js"></script>
     
