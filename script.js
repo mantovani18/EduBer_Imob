@@ -640,16 +640,25 @@ function handleSearch() {
     const searchInput = document.getElementById('searchInput');
     const searchSelect = document.getElementById('searchSelect');
     
+    console.log('🔍 handleSearch chamado');
+    console.log('📍 URL atual:', window.location.href);
+    console.log('📂 Pathname:', window.location.pathname);
+    
     if (!searchInput) {
-        console.error('Search input not found');
+        console.error('❌ Search input não encontrado');
         return;
     }
     
     const searchTerm = searchInput.value.toLowerCase().trim();
     const selectedType = searchSelect ? searchSelect.value.toLowerCase() : '';
     
+    console.log('🔎 Termo de busca:', searchTerm);
+    console.log('🏷️ Tipo selecionado:', selectedType);
+    
     // Detectar se estamos na página inicial
     const isIndexPage = !window.location.pathname.includes('imoveis.html');
+    
+    console.log('📄 É página inicial?', isIndexPage);
     
     // Se estamos na página inicial, redirecionar para página de imóveis com parâmetros
     if (isIndexPage) {
@@ -668,9 +677,14 @@ function handleSearch() {
         // Obter o caminho base correto
         const currentPath = window.location.pathname;
         const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-        window.location.href = basePath + 'imoveis.html' + queryString;
+        const targetUrl = basePath + 'imoveis.html' + queryString;
+        
+        console.log('➡️ Redirecionando para:', targetUrl);
+        window.location.href = targetUrl;
         return;
     }
+    
+    console.log('✅ Aplicando filtros na página de imóveis');
     
     // Se estamos na página de imóveis, aplicar filtros
     activeFilters.searchTerm = searchTerm;
